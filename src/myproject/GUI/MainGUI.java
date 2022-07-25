@@ -1,14 +1,15 @@
 package myproject.GUI;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import myproject.data.Skater;
 
@@ -30,14 +31,20 @@ public class MainGUI extends Application {
     HBox topBotBox;
 
     ImageView headerImage;
+    ImageView leftTopBanner;
+    ImageView leftBotBanner;
+
+
     HBox topTopBox;
 
-    VBox topCenterBox;
+    VBox centerBox;
+    VBox leftBox;
+    VBox rightBox;
 
-    BorderPane pane;
+    HBox pane;
     @Override
     public void start(Stage stage) throws Exception {
-        pane = new BorderPane();
+        pane = new HBox();
         Scene scene = new Scene(pane,1920,1080);
 
         home = new Button("home");
@@ -62,9 +69,38 @@ public class MainGUI extends Application {
         topTopBox = new HBox(headerImage);
         topTopBox.setAlignment(Pos.CENTER);
 
-        topCenterBox = new VBox(20,topTopBox,topBotBox);
+        centerBox = new VBox(20,topTopBox,topBotBox);
 
-        pane.setTop(topCenterBox);
+        Label eventsL = new Label("Events");
+        eventsL.setStyle("-Fx-background-color: #ffffff;");
+        leftTopBanner = new ImageView("C:\\Users\\giuli\\IdeaProjects\\ShortTrackOnlineInfo\\src\\myproject\\files\\leftTopBannerSTOI.jpg");
+        leftTopBanner.setOnMouseClicked(e -> {
+            System.out.println("ciao frocio mona :;))"); //TODO
+        });
+        HBox leftTopBannerBox = new HBox(leftTopBanner);
+        HBox eventsLBox = new HBox(eventsL);
+        eventsL.setPrefWidth(120);
+        eventsL.setTextAlignment(TextAlignment.CENTER);
+        leftBotBanner = new ImageView("C:\\Users\\giuli\\IdeaProjects\\ShortTrackOnlineInfo\\src\\myproject\\files\\LeftBotBannerSTOI.jpg");
+        leftBotBanner.setOnMouseClicked(e -> {
+            System.out.println("ciao frocio mona :;))"); //TODO
+        });
+        HBox leftBotBannerBox = new HBox(leftBotBanner);
+        leftBox = new VBox(eventsLBox,leftTopBannerBox,leftBotBannerBox);
+        eventsLBox.setAlignment(Pos.TOP_RIGHT);
+        eventsLBox.setPadding(new Insets(10,10,0,0));
+        leftTopBannerBox.setAlignment(Pos.TOP_RIGHT);
+        leftTopBannerBox.setPadding(new Insets(10,10,10,0));
+        leftBotBannerBox.setAlignment(Pos.TOP_RIGHT);
+        leftBotBannerBox.setPadding(new Insets(0,10,10,0));
+        leftBox.setPrefWidth(scene.getWidth()/3);
+        leftBox.setStyle("-Fx-background-color: #000067;");
+
+        rightBox = new VBox();
+        rightBox.setPrefWidth(scene.getWidth()/3);
+        rightBox.setBackground(new Background(new BackgroundFill(Paint.valueOf("#000067"),new CornerRadii(0),new Insets(0))));
+
+        pane.getChildren().addAll(leftBox, centerBox,rightBox);
         stage.setTitle("ShorttrackOnLine.info");
         stage.setScene(scene);
         stage.show();
